@@ -33,33 +33,45 @@ namespace SymbolTable
             return sum % size;
         }
 
-        public bool Add(string key)
-        {
-            int hashValue = Hash(key);
-            if (!items[hashValue].Contains(key))
-            {
-                items[hashValue].Add(key);
-                return true;
-            }
-            return false;
-        }
-
         public bool Contains(string key)
         {
             int hashValue = Hash(key);
             return items[hashValue].Contains(key);
         }
 
-        public bool Remove(string key)
+        public (int hashValue, int position) Add(string key)
         {
             int hashValue = Hash(key);
-
-            if (items[hashValue].Contains(key))
+            if (!Contains(key))
             {
-                items[hashValue].Remove(key);
-                return true;
+                items[hashValue].Add(key);
+                int position = items[hashValue].IndexOf(key);
+                return (hashValue, position);
             }
-            return false;
+            return (hashValue, -1);
+        }
+
+        public (int hashValue, int position) Remove(string key)
+        {
+            int hashValue = Hash(key);
+            if (Contains(key))
+            {
+                int position = items[hashValue].IndexOf(key);
+                items[hashValue].Remove(key);
+                return (hashValue, position);
+            }
+            return (hashValue, -1);
+        }
+
+        public (int hashValue, int position) KeyPosition(string key)
+        {
+            int hashValue = Hash(key);
+            if (Contains(key))
+            {
+                int position = items[hashValue].IndexOf(key);
+                return (hashValue, position);
+            }
+            return (hashValue, -1);
         }
 
         public override string ToString()

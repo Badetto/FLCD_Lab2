@@ -13,9 +13,9 @@ namespace SymbolTable
             Console.WriteLine("Add: " + symbolTable.Add("ab"));
             Console.WriteLine("Add: " + symbolTable.Add("abc"));
             Console.WriteLine("Add: " + symbolTable.Add("acb"));            
-            Console.WriteLine("Contains: " + symbolTable.Contains("ab"));
+            Console.WriteLine("Contains: " + symbolTable.KeyPosition("ab"));
             Console.WriteLine("Remove: " + symbolTable.Remove("ab"));
-            Console.WriteLine("Contains: " + symbolTable.Contains("ab"));
+            Console.WriteLine("Contains: " + symbolTable.KeyPosition("ab"));
             Console.WriteLine("Remove: " + symbolTable.Remove("ab"));
 
             Console.WriteLine(symbolTable.ToString());
