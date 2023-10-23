@@ -1,0 +1,12 @@
+p3 - Compute the sum of "n" numbers
+
+create n, i = 1, sum = 0
+n = readNumber()
+while (i <=n)
+{
+	create nr
+	nr = readInt()
+	sum = sum + nr
+	i = i + 1
+}
+print(sum)

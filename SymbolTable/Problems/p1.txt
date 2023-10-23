@@ -1,0 +1,14 @@
+create a, b, c
+a = readNumber()
+b = readNumber()
+c = readNumber()
+create minimum = a
+if (b < minimum)
+{
+	minimum = b
+}
+if (c < minimum)
+{
+	minimum = c
+}
+print(minimum)
