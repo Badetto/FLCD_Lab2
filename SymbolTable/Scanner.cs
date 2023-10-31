@@ -48,7 +48,7 @@ namespace SymbolTable
 
         private void ProcessStringToken(string combinedToken)
         {
-            Console.WriteLine($"PIF: (string, -1)");
+            Console.WriteLine($"PIF: (string, -2)");
             var processedToken = ProcessStringIdentifier(combinedToken);
             bool contains = symbolTable.Contains(processedToken);
             if (!contains)
