@@ -1,11 +1,9 @@
-p3 - Compute the sum of "n" numbers
-
 create n, i = 1, sum = 0
 n = readNumber()
 while (i <=n)
 {
 	create nr
-	nr = readInt()
+	nr = readNumber()
 	sum = sum + nr
 	i = i + 1
 }

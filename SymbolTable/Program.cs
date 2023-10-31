@@ -22,12 +22,19 @@ namespace SymbolTable
             Console.WriteLine(symbolTable.ToString());*/
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "p1.txt");
+            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "perr.txt");
             if (File.Exists(filePath))
             {
-                string sourceCode = File.ReadAllText(filePath);
-                Scanner scanner = new Scanner();
-                scanner.Tokenize(sourceCode);
+                try
+                {
+                    string sourceCode = File.ReadAllText(filePath);
+                    Scanner scanner = new Scanner();
+                    scanner.Tokenize(sourceCode);
+                }
+                catch (ScannerException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             else
             {

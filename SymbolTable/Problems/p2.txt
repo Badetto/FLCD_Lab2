@@ -1,6 +1,4 @@
-//p2 - Verify if a number is prime
-
-create x, i = 2, prime = 1
+create x, i =-2, prime = 1
 x = readNumber()
 while (i*i <= x)
 {
@@ -17,4 +15,6 @@ if (prime == 1)
 else
 {
 	print("Given number is NOT prime")
-}
+} // @quiweqhwoidqw
+
+// a + b = 1

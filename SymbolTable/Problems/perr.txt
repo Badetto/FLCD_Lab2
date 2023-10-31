@@ -1,6 +1,4 @@
-//p_err - Program with 2 lexical errors
-
-create 1x, i = 2, prim@ = 1 // "1x" cannot be defined based on "Lexic.in" "identifier" | also "prim@" cannot be defined because "@" is not a defined character
+create 1x, i = 2, prim@ = 1
 1x = readNumber()
 while (i*i <= 1x)
 {
