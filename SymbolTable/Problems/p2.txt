@@ -1,4 +1,4 @@
-create x, i =-2, prime = 1
+create x, i = -5-2, prime = 1
 x = readNumber()
 while (i*i <= x)
 {
@@ -14,7 +14,7 @@ if (prime == 1)
 }
 else
 {
-	print("Given number is NOT prime")
+	print("Given number is aNOT prime")
 } // @quiweqhwoidqw
 
 // a + b = 1

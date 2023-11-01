@@ -27,7 +27,7 @@ namespace SymbolTable
                 {"readNumber", "readNumber"},
                 {"readText", "readText"},
             };
-            operators = new HashSet<string> { "+", "-", "*", "/", "==", "<", "<=", "=", ">=" };
+            operators = new HashSet<string> { "%", "+", "-", "*", "/", "==", "<", "<=", "=", ">=" };
             separators = new HashSet<string> { "{", "}", "(", ")", ",", ":", "<>", " ", "\n" };
         }
 
@@ -48,12 +48,17 @@ namespace SymbolTable
 
         private void ProcessStringToken(string combinedToken)
         {
-            Console.WriteLine($"PIF: (string, -2)");
             var processedToken = ProcessStringIdentifier(combinedToken);
             bool contains = symbolTable.Contains(processedToken);
             if (!contains)
             {
-                symbolTable.Add(processedToken);
+                (int, int) position = symbolTable.Add(processedToken);
+                Console.WriteLine($"PIF: (constant, {position})");
+            }
+            else
+            {
+                (int, int) position = symbolTable.KeyPosition(processedToken);
+                Console.WriteLine($"PIF: (constant, {position})");
             }
         }
 
@@ -63,12 +68,12 @@ namespace SymbolTable
             if (!contains)
             {
                 (int, int) position = symbolTable.Add(token);
-                Console.WriteLine($"PIF: ({token}, {position})");
+                Console.WriteLine($"PIF: (identifier, {position})");
             }
             else
             {
                 (int, int) position = symbolTable.KeyPosition(token);
-                Console.WriteLine($"PIF: ({token}, {position})");
+                Console.WriteLine($"PIF: (identifier, {position})");
             }
         }
 
@@ -86,20 +91,26 @@ namespace SymbolTable
             bool contains = symbolTable.Contains(numberToken);
             if (!contains)
             {
-                symbolTable.Add(numberToken);
+                (int, int) position = symbolTable.Add(numberToken);
+                Console.WriteLine($"PIF: (constant, {position})");
             }
-            Console.WriteLine($"PIF: (number, -1)");
+            else
+            {
+                (int, int) position = symbolTable.KeyPosition(numberToken);
+                Console.WriteLine($"PIF: (constant, {position})");
+            }
         }
 
         private void TokenizeLine(string line)
         {
-            var tokens = Regex.Matches(line, @"==|<=|>=|[-+*/=<>,:(){}""]|\b\w+\b|""[^""]*""|//.*");
+            var tokens = Regex.Matches(line, @"==|<=|>=|[-+*/=<>,:(){}""/%]|\b\w+\b|""[^""]*""|//.*");
 
             string combinedToken = null;
             bool isSign = false;
             string sign = "";
             string lastToken = "";
             string currentToken = "";
+            int numberOfQuotes = 0;
 
             foreach (Match match in tokens)
             {
@@ -133,6 +144,7 @@ namespace SymbolTable
                     }
                     if (token.EndsWith("\""))
                     {
+                        numberOfQuotes++;
                         ProcessStringToken(combinedToken);
                         combinedToken = null;
                     }
@@ -140,17 +152,37 @@ namespace SymbolTable
                 }
                 else if (token.StartsWith("\""))
                 {
+                    numberOfQuotes++;
                     combinedToken = token;
                     continue;
                 }
                 else if (token.StartsWith("-") || token.StartsWith("+"))
                 {
-                    isSign = true;
-                    sign = token;
+                    if (!operators.Contains(lastToken))
+                    {
+                        Console.WriteLine($"PIF: ({token}, -1)");
+
+                    }
+
+                    if (operators.Contains(lastToken))
+                    {
+                       
+                        isSign = true;
+                        sign = token;
+                    }
+                    else
+                    {
+                        isSign = false;
+                        sign = token;
+                    }
                     continue;
                 }
                 else if (operators.Contains(token) || separators.Contains(token) || reservedWords.ContainsKey(token))
                 {
+                    if (token != "/")
+                    {
+                        Console.WriteLine($"PIF: ({token}, -3)");
+                    }
                     continue;
                 }
                 else if (IsIdentifier(token))
@@ -168,6 +200,11 @@ namespace SymbolTable
                     string errorMessage = "Lexical Error at line " + lineNumber + " - Token: " + token + " is invalid";
                     throw new ScannerException(errorMessage);
                 }
+            }
+            if (numberOfQuotes % 2 == 1)
+            {
+                string errorMessage = "Lexical Error at line " + lineNumber + " - Quotes not closed correctly";
+                throw new ScannerException(errorMessage);
             }
         }
 
