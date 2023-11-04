@@ -22,7 +22,7 @@ namespace SymbolTable
             Console.WriteLine(symbolTable.ToString());*/
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "p2.txt");
+            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "p1.txt");
             if (File.Exists(filePath))
             {
                 try
