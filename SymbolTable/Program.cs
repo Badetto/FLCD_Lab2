@@ -7,7 +7,8 @@ namespace SymbolTable
     {
         static void Main()
         {
-            /*SymbolTable symbolTable = new(13);
+            /*Symbol Table
+            SymbolTable symbolTable = new(13);
 
             Console.WriteLine("Add: " + symbolTable.Add("a"));
             Console.WriteLine("Add: " + symbolTable.Add("ab"));
@@ -22,14 +23,19 @@ namespace SymbolTable
             Console.WriteLine(symbolTable.ToString());*/
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "p1.txt");
+            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "fa.txt");
             if (File.Exists(filePath))
             {
                 try
                 {
+                    /*Scanner
                     string sourceCode = File.ReadAllText(filePath);
                     Scanner scanner = new Scanner();
-                    scanner.Tokenize(sourceCode);
+                    scanner.Tokenize(sourceCode);*/
+                    string sourceCode = File.ReadAllText(filePath);
+                    FiniteAutomata.FiniteAutomata finiteAutomata = new FiniteAutomata.FiniteAutomata(sourceCode);
+                    finiteAutomata.ReadFile();
+                    finiteAutomata.DisplayElements();
                 }
                 catch (ScannerException e)
                 {
