@@ -40,7 +40,9 @@ namespace FiniteAutomata
                 string trimmedLine = line.Trim();
 
                 if (string.IsNullOrEmpty(trimmedLine))
+                {
                     continue;
+                }
 
                 if (trimmedLine == "states")
                 {
@@ -98,16 +100,57 @@ namespace FiniteAutomata
             }
         }
 
-        public void DisplayElements()
+        public bool CheckSequence(List<string> sequence)
+        {
+            var state = InitialState;
+            foreach (var chr in sequence)
+            {
+                string newState = null;
+                foreach (var transition in Transitions)
+                {
+                    if (transition.Item1 == state && transition.Item2 == chr)
+                    {
+                        newState = transition.Item3;
+                        break;
+                    }
+                }
+
+                if (newState == null)
+                {
+                    return false;
+                }
+                    
+                state = newState;
+            }
+            return FinalStates.Contains(state);
+        }
+
+        public void DisplayStates()
         {
             Console.WriteLine("States: " + string.Join(", ", States));
+        }
+
+        public void DisplayAlphabet()
+        {
             Console.WriteLine("Alphabet: " + string.Join(", ", Alphabet));
+        }
+
+        public void DisplayTransitions()
+        {
             Console.WriteLine("Transitions:");
             foreach (var transition in Transitions)
             {
-                Console.WriteLine($"{transition.Item1} --({transition.Item3})--> {transition.Item2}");
+                Console.WriteLine($"{transition.Item1} --({transition.Item2})--> {transition.Item3}");
             }
+        }
+
+        public void DisplayInitialState()
+        {
             Console.WriteLine("Initial State: " + InitialState);
+        }
+
+        public void DisplayFinalStates()
+        {
             Console.WriteLine("Final States: " + string.Join(", ", FinalStates));
         }
     }
