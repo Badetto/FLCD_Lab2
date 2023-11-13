@@ -31,14 +31,44 @@ namespace SymbolTable
             separators = new HashSet<string> { "{", "}", "(", ")", ",", ":", "<>", " ", "\n" };
         }
 
+        static List<string> ReadSequenceOfCharacters(string token)
+        {
+            var listOfCharacters = new List<string>();
+
+            foreach (var chr in token)
+            {
+                listOfCharacters.Add(chr.ToString());
+            }
+
+            return listOfCharacters;
+        }
+
         private bool IsIdentifier(string token)
         {
-            return Regex.IsMatch(token, @"^[a-zA-Z_][a-zA-Z0-9_]*$");
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "fa_identifier.txt");
+
+            string sourceCode = File.ReadAllText(filePath);
+            FiniteAutomata.FiniteAutomata finiteAutomata = new FiniteAutomata.FiniteAutomata(sourceCode);
+            finiteAutomata.ReadFile(); 
+            return finiteAutomata.CheckSequence(ReadSequenceOfCharacters(token));
+
+
         }
 
         private bool IsNumberConstant(string token)
         {
-            return Regex.IsMatch(token, @"^[+-]?\d+(\.\d+)?$");
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "fa_int_constant.txt");
+
+            string sourceCode = File.ReadAllText(filePath);
+            FiniteAutomata.FiniteAutomata finiteAutomata = new FiniteAutomata.FiniteAutomata(sourceCode);
+            finiteAutomata.ReadFile();
+            return finiteAutomata.CheckSequence(ReadSequenceOfCharacters(token));
+
+              
         }
 
         private string ProcessStringIdentifier(string combinedToken)
@@ -114,6 +144,7 @@ namespace SymbolTable
 
             foreach (Match match in tokens)
             {
+
                 string token = match.Value;
                 if (string.IsNullOrWhiteSpace(token))
                 {
@@ -161,7 +192,6 @@ namespace SymbolTable
                     if (!operators.Contains(lastToken))
                     {
                         Console.WriteLine($"PIF: ({token}, -1)");
-
                     }
 
                     if (operators.Contains(lastToken))
@@ -190,7 +220,21 @@ namespace SymbolTable
                     ProcessIdentifierToken(token);
                 }
                 else if (IsNumberConstant(token))
-                { 
+                {
+                    string numberToken;
+                    if (isSign)
+                    {
+                        numberToken = sign + token;
+                    }
+                    else
+                    {
+                        numberToken = token;
+                    }
+                    if (!IsNumberConstant(numberToken))
+                    {
+                        string errorMessage = "Lexical Error at line " + lineNumber + " - Token: " + numberToken + " is invalid";
+                        throw new ScannerException(errorMessage);
+                    }
                     ProcessNumberToken(isSign, sign, token);
                     isSign = false;
                     sign = "";

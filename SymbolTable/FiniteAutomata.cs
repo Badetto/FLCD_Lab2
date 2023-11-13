@@ -88,7 +88,12 @@ namespace FiniteAutomata
                         string[] parts = trimmedLine.Split(',');
                         if (parts.Length == 3)
                         {
-                            Transitions.Add(new Tuple<string, string, string>(parts[0].Trim(), parts[1].Trim(), parts[2].Trim()));
+                            var newTransition = new Tuple<string, string, string>(parts[0].Trim(), parts[1].Trim(), parts[2].Trim());
+
+                            if (!Transitions.Any(t => t.Item1 == newTransition.Item1 && t.Item2 == newTransition.Item2 && t.Item3 == newTransition.Item3))
+                            {
+                                Transitions.Add(newTransition);
+                            }
                         }
                         break;
                 }
@@ -98,8 +103,30 @@ namespace FiniteAutomata
             {
                 throw new FormatException("Invalid file format.");
             }
+            if (!IsDeterministic())
+            {
+                throw new Exception("Non-deterministic FA");
+            }
         }
 
+        public bool IsDeterministic()
+        {
+            var transitionMap = new Dictionary<(string, string), string>();
+
+            foreach (var transition in Transitions)
+            {
+                var key = (transition.Item1, transition.Item2); 
+
+                if (transitionMap.ContainsKey(key))
+                {
+                    return false;
+                }
+
+                transitionMap[key] = transition.Item3; 
+            }
+
+            return true;
+        }
         public bool CheckSequence(List<string> sequence)
         {
             var state = InitialState;

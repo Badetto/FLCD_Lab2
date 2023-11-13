@@ -26,13 +26,17 @@ namespace SymbolTable
             /* Symbol Table test - previous commits */
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "fa_identifier.txt");
+            string filePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "p2.txt");
             if (File.Exists(filePath))
             {
                 try
                 {
                     /* Scanner test - previous commits */
                     string sourceCode = File.ReadAllText(filePath);
+                    Scanner scanner = new Scanner();
+                    scanner.Tokenize(sourceCode);
+                    
+                    /*string sourceCode = File.ReadAllText(filePath);
                     FiniteAutomata.FiniteAutomata finiteAutomata = new FiniteAutomata.FiniteAutomata(sourceCode);
                     finiteAutomata.ReadFile();    
                     while (true)
@@ -69,7 +73,7 @@ namespace SymbolTable
                                 Console.WriteLine("Invalid choice");
                                 break;
                         }
-                    }
+                    }*/
                 }
                 catch (ScannerException e)
                 {

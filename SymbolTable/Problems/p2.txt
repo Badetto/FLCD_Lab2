@@ -1,4 +1,4 @@
-create x, i = -5-2, prime = 1
+create x, i = +5, prime = -0
 x = readNumber()
 while (i*i <= x)
 {
