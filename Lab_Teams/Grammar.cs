@@ -10,19 +10,18 @@ namespace Lab_Teams
         private List<string> nonTerminals;
         private List<string> terminals;
         private string startingSymbol;
-        private Dictionary<string, List<string>> productions;
+        private Dictionary<List<string>, HashSet<List<string>>> productions;
         
         public Grammar()
         {
             nonTerminals = new List<string>();
             terminals = new List<string>();
-            productions = new Dictionary<string, List<string>>();
+            productions = new Dictionary<List<string>, HashSet<List<string>>>();
             startingSymbol = "";
         }
 
         public void ReadGrammarFromFile(string filePath)
         {
-            // Read the file
             using(StreamReader sr = new StreamReader(filePath)) 
             {
                 string line;
@@ -47,16 +46,25 @@ namespace Lab_Teams
                     else
                     {
                         string[] tokens = line.Split("-");
-                        string nonTerminal = tokens[0].Trim();
+                        string nonTerminals = tokens[0].Trim();
                         string[] elems = tokens[1].Split("|");
-                        List<string> elemsTrimmed = new List<string>();
+                        HashSet<List<string>> finalProductionValue = new HashSet<List<string>>();
                         foreach(var elem in elems)
                         {
-                            elemsTrimmed.Add(elem.Trim());
+                            List<string> elemsTrimmed = new List<string>();
+                            foreach (var chr in elem.Trim())
+                            {
+                                elemsTrimmed.Add(chr.ToString());
+                            }
+                            finalProductionValue.Add(elemsTrimmed);
                         }
-                        productions.Add(nonTerminal, elemsTrimmed);
+                        List<string> nonTerminalsList = new List<string>(); 
+                        foreach(var elem in nonTerminals)
+                        {
+                            nonTerminalsList.Add(elem.ToString());
+                        }
+                        productions.Add(nonTerminalsList, finalProductionValue);
                     }
-
                     nrLine++;
                 }
             }
@@ -94,21 +102,35 @@ namespace Lab_Teams
             Console.WriteLine("Productions:");
             foreach (var kvp in productions)
             {
-                Console.Write(kvp.Key + " -> ");
-                Console.WriteLine(string.Join(" | ", kvp.Value));
+                Console.Write(kvp.Key[0] + " -> ");
+
+                var listValuesRepresentations = kvp.Value.Select(list => string.Join("", list));
+
+                Console.WriteLine(string.Join(" | ", listValuesRepresentations));
             }
         }
 
-        public List<string> GetProductionsForNonTerminal(string nonTerminal)
+        public HashSet<List<string>> GetProductionsForNonTerminal(string nonTerminal)
         {
-            return productions.ContainsKey(nonTerminal) ? productions[nonTerminal] : new List<string>();
+            foreach (var production in productions)
+            {
+                if (production.Key[0] == nonTerminal)
+                {
+                    return production.Value;
+                }
+            }
+            return new HashSet<List<string>>();
         }
 
         public bool IsCFG()
         {
             foreach (var production in productions)
             {
-                if (!nonTerminals.Contains(production.Key))
+                if (production.Key.Count > 1)
+                {
+                    return false;
+                }
+                if (!nonTerminals.Contains(production.Key[0]))
                 {
                     return false;
                 }
