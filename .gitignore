@@ -17,3 +17,7 @@ SymbolTable/.vs/SymbolTable/v17/.suo
 *.BuildWithSkipAnalyzers
 *.props
 *.targets
+Lab_Teams/obj
+Lab_Teams/.vs
+*.sln
+*.csproj
