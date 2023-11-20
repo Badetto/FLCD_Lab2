@@ -50,7 +50,14 @@ namespace Lab_Teams
 
         public bool IsCFG()
         {
-            // Check and return if the grammar is a CFG
+            foreach (var production in productions)
+            {
+                if (!nonTerminals.Contains(production.Key))
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
     }
