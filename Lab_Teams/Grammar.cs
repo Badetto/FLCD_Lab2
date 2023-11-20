@@ -31,24 +31,24 @@ namespace Lab_Teams
                 {
                     if (nrLine == 1)
                     {
-                        String[] elements = line.Split(' ');
+                        string[] elements = line.Split(' ');
                         nonTerminals.AddRange(elements);
                     }
                     else if (nrLine == 2) 
                     {
-                        String[] elements = line.Split(' ');
+                        string[] elements = line.Split(' ');
                         terminals.AddRange(elements);
                     }
                     else if (nrLine == 3) 
                     {
-                        String[] elements = line.Split(' ');
+                        string[] elements = line.Split(' ');
                         startingSymbol = elements[0];
                     }
                     else
                     {
-                        String[] tokens = line.Split("-");
-                        String nonTerminal = tokens[0].Trim();
-                        String[] elems = tokens[1].Split("|");
+                        string[] tokens = line.Split("-");
+                        string nonTerminal = tokens[0].Trim();
+                        string[] elems = tokens[1].Split("|");
                         List<string> elemsTrimmed = new List<string>();
                         foreach(var elem in elems)
                         {
@@ -65,20 +65,26 @@ namespace Lab_Teams
 
         public void PrintNonTerminals()
         {
-            Console.WriteLine("Non-terminals");
-            Console.WriteLine(nonTerminals);
+            Console.WriteLine("Non-terminals: ");
+            Console.WriteLine(nonTerminals.ToString());
         }
 
         public void PrintTerminals()
         {
-            Console.WriteLine("Terminals");
-            Console.WriteLine(terminals);
+            Console.WriteLine("Terminals: ");
+            Console.WriteLine(terminals.ToString());
+        }
+
+        public void PrintStartingSymbol()
+        {
+            Console.WriteLine("Starting Symbol: ");
+            Console.WriteLine(terminals.ToString());
         }
 
         public void PrintProductions()
         {
-            Console.WriteLine("Productions");
-            Console.WriteLine(productions);
+            Console.WriteLine("Productions: ");
+            Console.WriteLine(productions.ToString());
         }
 
         public List<string> GetProductionsForNonTerminal(string nonTerminal)
