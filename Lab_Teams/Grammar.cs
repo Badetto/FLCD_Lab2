@@ -65,26 +65,38 @@ namespace Lab_Teams
 
         public void PrintNonTerminals()
         {
-            Console.WriteLine("Non-terminals: ");
-            Console.WriteLine(nonTerminals.ToString());
+            Console.WriteLine("Non-terminals:");
+            foreach (var nonTerminal in nonTerminals)
+            {
+                Console.Write(nonTerminal + " ");
+            }
+            Console.WriteLine();
         }
 
         public void PrintTerminals()
         {
-            Console.WriteLine("Terminals: ");
-            Console.WriteLine(terminals.ToString());
+            Console.WriteLine("Terminals:");
+            foreach (var terminal in terminals)
+            {
+                Console.Write(terminal + " ");
+            }
+            Console.WriteLine();    
         }
 
         public void PrintStartingSymbol()
         {
             Console.WriteLine("Starting Symbol: ");
-            Console.WriteLine(terminals.ToString());
+            Console.WriteLine(startingSymbol);
         }
 
         public void PrintProductions()
         {
-            Console.WriteLine("Productions: ");
-            Console.WriteLine(productions.ToString());
+            Console.WriteLine("Productions:");
+            foreach (var kvp in productions)
+            {
+                Console.Write(kvp.Key + " -> ");
+                Console.WriteLine(string.Join(" | ", kvp.Value));
+            }
         }
 
         public List<string> GetProductionsForNonTerminal(string nonTerminal)
