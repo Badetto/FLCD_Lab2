@@ -46,7 +46,9 @@ namespace Lab_Teams
                     else
                     {
                         string[] tokens = line.Split("->");
-                        string nonTerminals = tokens[0].Trim();
+                        string nonTerminalsString = tokens[0].Trim();
+                        string[] nonTerminalsArray = nonTerminalsString.Split(" ");
+
                         string[] elems = tokens[1].Split("|");
                         HashSet<List<string>> finalProductionValue = new HashSet<List<string>>();
                         foreach(var elem in elems)
@@ -59,7 +61,7 @@ namespace Lab_Teams
                             finalProductionValue.Add(elemsTrimmed);
                         }
                         List<string> nonTerminalsList = new List<string>(); 
-                        foreach(var elem in nonTerminals)
+                        foreach(var elem in nonTerminalsArray)
                         {
                             nonTerminalsList.Add(elem.ToString());
                         }
