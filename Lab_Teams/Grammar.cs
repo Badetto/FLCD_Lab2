@@ -45,7 +45,7 @@ namespace Lab_Teams
                     }
                     else
                     {
-                        string[] tokens = line.Split("-");
+                        string[] tokens = line.Split("->");
                         string nonTerminals = tokens[0].Trim();
                         string[] elems = tokens[1].Split("|");
                         HashSet<List<string>> finalProductionValue = new HashSet<List<string>>();
