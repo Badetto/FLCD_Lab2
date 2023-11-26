@@ -1,0 +1,133 @@
+Arr_stmt Assign_stmt Start_identifier Condition Digit Expression Expression_list Identifier Identifier_list If_stmt  Int_constant Int_expression  Character Mathematical_operator Sign Non_zero_digit Positive_number Program Pure_identifier_list Relational_operator End_identifier  Return_stmt  Stmt  String_const String_expr String_content End_int_const Var_stmt  While_stmt 
+" ( ) * + , - / ; < <= = == > >= _ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9 arr digit else epsilon get_element if print readInt readString return set_element var while { }
+Program
+Program -> Stmt  ; Program
+Program -> epsilon
+Stmt  -> Var_stmt 
+Stmt  -> Arr_stmt
+Stmt  -> Assign_stmt
+Stmt  -> If_stmt 
+Stmt  -> While_stmt 
+Stmt  -> Return_stmt 
+Stmt  -> Var_stmt 
+Var_stmt  -> var Identifier_list
+Identifier_list -> Identifier, Identifier_list
+Expression -> Int_expression 
+Expression -> StringExpression
+Mathematical_operator -> +
+Mathematical_operator -> -
+Mathematical_operator -> *
+Mathematical_operator -> /
+String_expr -> StringConstant
+String_expr -> Identifier
+Int_expression  -> Int_constant
+Int_expression  -> Identifier
+Int_expression  -> Int_expression  Mathematical_operator Int_expression 
+Int_expression  -> ( Int_expression  Mathematical_operator Int_expression  )
+Expression_list  -> Expression
+Expression_list  -> Expression , Expression_list 
+Arr_stmt -> arr < Positive_number > Pure_identifier_list
+Pure_identifier_list -> Identifier
+Pure_identifier_list -> Identifier , Pure_identifier_list
+Assign_stmt -> Identifier = Expression
+If_stmt  -> if ( Condition ) { Program }
+If_stmt  -> if ( Condition ) { Program } else { Program }
+Relational_operator -> ==
+Relational_operator -> <
+Relational_operator -> <=
+Relational_operator -> >
+Relational_operator -> >=
+Condition -> Expression Relational_operator Expression
+While_stmt  -> while ( Condition ) { Program }
+Return_stmt  -> return Expression
+Digit -> 0
+Digit -> 1
+Digit -> 2
+Digit -> 3
+Digit -> 4
+Digit -> 5
+Digit -> 6
+Digit -> 7
+Digit -> 8
+Digit -> 9
+Non_zero_digit -> 1
+Non_zero_digit -> 2
+Non_zero_digit -> 3
+Non_zero_digit -> 4
+Non_zero_digit -> 5
+Non_zero_digit -> 6
+Non_zero_digit -> 7
+Non_zero_digit -> 8
+Non_zero_digit -> 9
+Character -> A
+Character -> B
+Character -> C
+Character -> D
+Character -> E
+Character -> F
+Character -> G
+Character -> H
+Character -> I
+Character -> J
+Character -> K
+Character -> L
+Character -> M
+Character -> N
+Character -> O
+Character -> P
+Character -> Q
+Character -> R
+Character -> S
+Character -> T
+Character -> U
+Character -> V
+Character -> W
+Character -> X
+Character -> Y
+Character -> Z
+Character -> a
+Character -> b
+Character -> c
+Character -> d
+Character -> e
+Character -> f
+Character -> g
+Character -> h
+Character -> i
+Character -> j
+Character -> k
+Character -> l
+Character -> m
+Character -> n
+Character -> o
+Character -> p
+Character -> q
+Character -> r
+Character -> s
+Character -> t
+Character -> u
+Character -> v
+Character -> w
+Character -> x
+Character -> y
+Character -> z
+Start_identifier -> Character
+Start_identifier -> _
+Identifier -> Start_identifier End_identifier
+End_identifier  -> epsilon
+End_identifier  -> Character End_identifier
+End_identifier  -> Digit End_identifier
+End_identifier  -> _ End_identifier
+Sign -> +
+Sign -> -
+Sign -> epsilon
+Int_constant -> Sign Positive_Number
+Int_constant -> 0
+Positive_number -> Non_zero_digit End_int_const
+End_int_const-> epsilon
+End_int_const-> digit End_int_const
+String_const -> " String_content "
+String_content -> epsilon
+String_content -> Character String_content
+String_content -> Digit String_content
+String_content -> _ String_content
