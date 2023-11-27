@@ -7,10 +7,10 @@ namespace Lab_Teams
 {
     public class Grammar
     {
-        private List<string> nonTerminals;
-        private List<string> terminals;
-        private string startingSymbol;
-        private Dictionary<List<string>, HashSet<List<string>>> productions;
+        public List<string> nonTerminals;
+        public List<string> terminals;
+        public string startingSymbol;
+        public Dictionary<List<string>, HashSet<List<string>>> productions;
         
         public Grammar()
         {
@@ -51,6 +51,7 @@ namespace Lab_Teams
 
                         string[] elems = tokens[1].Split("|");
                         HashSet<List<string>> finalProductionValue = new HashSet<List<string>>();
+                        //TODO: Do spaces split here
                         foreach(var elem in elems)
                         {
                             List<string> elemsTrimmed = new List<string>();
@@ -140,6 +141,10 @@ namespace Lab_Teams
 
             return true;
         }
-    }
 
+        public bool IsTerminal(string symbol)
+        {
+            return terminals.Contains(symbol);
+        }
+    }
 }

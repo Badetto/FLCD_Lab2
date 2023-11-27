@@ -10,7 +10,7 @@ namespace Lab_Teams
         {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            string relativePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g2.txt");
+            string relativePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g1.txt");
             string filePath = Path.GetFullPath(relativePath);
             Console.WriteLine(filePath);
             if (File.Exists(filePath))
@@ -18,12 +18,24 @@ namespace Lab_Teams
                 try
                 {
                     Grammar grammar = new Grammar();
+                    Parser parser = new Parser(grammar);
                     grammar.ReadGrammarFromFile(filePath);
                     grammar.PrintNonTerminals();
                     grammar.PrintTerminals();
                     grammar.PrintStartingSymbol();
                     grammar.PrintProductions();
-                    grammar.IsCFG();
+                    Console.WriteLine(grammar.IsCFG());
+                    foreach (var nT in grammar.nonTerminals)
+                    {
+                        Console.Write("FRIST(" + nT + ") = ");
+                        var firstSet = parser.First(nT);
+                        foreach (var set in firstSet)
+                        {
+                            Console.Write(set.ToString() + " ");
+                        }
+                        Console.WriteLine();
+                    }
+                    
                 }
                 catch (Exception e)
                 {
