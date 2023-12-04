@@ -32,9 +32,9 @@ namespace Lab_Teams
                 {
                     var firstOfProdSymbol = First(prodSymbol);
 
-                    firstSet.UnionWith(firstOfProdSymbol.Where(x => x != "ε"));
+                    firstSet.UnionWith(firstOfProdSymbol.Where(x => x != "epsilon"));
 
-                    if (!firstOfProdSymbol.Contains("ε"))
+                    if (!firstOfProdSymbol.Contains("epsilon"))
                     {
                         containsEpsilon = false;
                         break;
@@ -43,21 +43,32 @@ namespace Lab_Teams
 
                 if (containsEpsilon)
                 {
-                    firstSet.Add("ε");
+                    firstSet.Add("epsilon");
                 }
             }
 
             return firstSet;
         }
 
-        public HashSet<string> Follow(string nonTerminal)
+        public HashSet<string> Follow(string nonTerminal, HashSet<string> inProgress = null)
         {
+            if (inProgress == null)
+            {
+                inProgress = new HashSet<string>();
+            }        
+            if (inProgress.Contains(nonTerminal))
+            {
+                return new HashSet<string>();
+            }
+
             HashSet<string> followSet = new HashSet<string>();
 
             if (nonTerminal == grammar.startingSymbol)
             {
                 followSet.Add("$");
             }
+
+            inProgress.Add(nonTerminal);
 
             foreach (var production in grammar.productions)
             {
@@ -72,22 +83,25 @@ namespace Lab_Teams
                         {
                             var nextSymbol = symbols[position + 1];
                             var firstOfNextSymbol = First(nextSymbol);
-                            followSet.UnionWith(firstOfNextSymbol.Where(x => x != "ε"));
+                            followSet.UnionWith(firstOfNextSymbol.Where(x => x != "epsilon"));
 
-                            if (firstOfNextSymbol.Contains("ε"))
+                            if (firstOfNextSymbol.Contains("epsilon"))
                             {
-                                followSet.UnionWith(Follow(production.Key[0]));
+                                followSet.UnionWith(Follow(production.Key[0], inProgress));
                             }
-                        }
+                        }   
                         else
                         {
-                            followSet.UnionWith(Follow(production.Key[0]));
+                            followSet.UnionWith(Follow(production.Key[0], inProgress));
                         }
                     }
                 }
             }
 
+            inProgress.Remove(nonTerminal);
+
             return followSet;
         }
+
     }
 }
