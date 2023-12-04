@@ -10,7 +10,7 @@ namespace Lab_Teams
         {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            string relativePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g1.txt");
+            string relativePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g3.txt");
             string filePath = Path.GetFullPath(relativePath);
             Console.WriteLine(filePath);
             if (File.Exists(filePath))
@@ -22,6 +22,7 @@ namespace Lab_Teams
                     grammar.ReadGrammarFromFile(filePath);
                     grammar.PrintNonTerminals();
                     grammar.PrintTerminals();
+                    grammar.GetProductionsForNonTerminal("A");
                     grammar.PrintStartingSymbol();
                     grammar.PrintProductions();
                     Console.WriteLine(grammar.IsCFG());

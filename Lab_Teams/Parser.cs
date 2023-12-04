@@ -26,15 +26,20 @@ namespace Lab_Teams
             var productions = grammar.GetProductionsForNonTerminal(symbol);
             foreach (var production in productions)
             {
+                if (production.Count == 1 && production.First() == "&")
+                {
+                    firstSet.Add("&");
+                    continue; 
+                }
                 bool containsEpsilon = true;
 
                 foreach (var prodSymbol in production)
                 {
                     var firstOfProdSymbol = First(prodSymbol);
 
-                    firstSet.UnionWith(firstOfProdSymbol.Where(x => x != "epsilon"));
+                    firstSet.UnionWith(firstOfProdSymbol.Where(x => x != "&"));
 
-                    if (!firstOfProdSymbol.Contains("epsilon"))
+                    if (!firstOfProdSymbol.Contains("&"))
                     {
                         containsEpsilon = false;
                         break;
@@ -43,7 +48,7 @@ namespace Lab_Teams
 
                 if (containsEpsilon)
                 {
-                    firstSet.Add("epsilon");
+                    firstSet.Add("&");
                 }
             }
 
@@ -83,9 +88,9 @@ namespace Lab_Teams
                         {
                             var nextSymbol = symbols[position + 1];
                             var firstOfNextSymbol = First(nextSymbol);
-                            followSet.UnionWith(firstOfNextSymbol.Where(x => x != "epsilon"));
+                            followSet.UnionWith(firstOfNextSymbol.Where(x => x != "&"));
 
-                            if (firstOfNextSymbol.Contains("epsilon"))
+                            if (firstOfNextSymbol.Contains("&"))
                             {
                                 followSet.UnionWith(Follow(production.Key[0], inProgress));
                             }
@@ -102,6 +107,5 @@ namespace Lab_Teams
 
             return followSet;
         }
-
     }
 }

@@ -115,15 +115,20 @@ namespace Lab_Teams
 
         public HashSet<List<string>> GetProductionsForNonTerminal(string nonTerminal)
         {
+            HashSet<List<string>> allProductionsForNonTerminal = new HashSet<List<string>>();
             foreach (var production in productions)
             {
                 if (production.Key[0] == nonTerminal)
                 {
-                    return production.Value;
+                    foreach (var prod in production.Value)
+                    {
+                        allProductionsForNonTerminal.Add(prod);
+                    }
                 }
             }
-            return new HashSet<List<string>>();
+            return allProductionsForNonTerminal;
         }
+
 
         public bool IsCFG()
         {
