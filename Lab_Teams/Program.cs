@@ -35,7 +35,16 @@ namespace Lab_Teams
                         }
                         Console.WriteLine();
                     }
-                    
+                    foreach (var nT in grammar.nonTerminals)
+                    {
+                        Console.Write("FOLLOW(" + nT + ") = ");
+                        var followSet = parser.Follow(nT);
+                        foreach (var set in followSet)
+                        {
+                            Console.Write(set.ToString() + " ");
+                        }
+                        Console.WriteLine();
+                    }
                 }
                 catch (Exception e)
                 {
