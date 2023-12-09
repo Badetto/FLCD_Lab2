@@ -13,12 +13,12 @@ Stmt  -> Var_stmt
 Var_stmt  -> var Identifier_list
 Identifier_list -> Identifier, Identifier_list
 Expression -> Int_expression 
-Expression -> StringExpression
+Expression -> String_expr
 Mathematical_operator -> +
 Mathematical_operator -> -
 Mathematical_operator -> *
 Mathematical_operator -> /
-String_expr -> StringConstant
+String_expr -> String_const
 String_expr -> Identifier
 Int_expression  -> Int_constant
 Int_expression  -> Identifier
@@ -121,7 +121,7 @@ End_identifier  -> _ End_identifier
 Sign -> +
 Sign -> -
 Sign -> epsilon
-Int_constant -> Sign Positive_Number
+Int_constant -> Sign Positive_number
 Int_constant -> 0
 Positive_number -> Non_zero_digit End_int_const
 End_int_const-> epsilon
