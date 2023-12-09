@@ -10,7 +10,7 @@ namespace Lab_Teams
         {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            string relativePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g3.txt");
+            string relativePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g2.txt");
             string filePath = Path.GetFullPath(relativePath);
             Console.WriteLine(filePath);
             if (File.Exists(filePath))

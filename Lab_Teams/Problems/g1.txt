@@ -1,5 +1,5 @@
 S A
 a b c
 S
-S -> Aa | Ac
+S -> A a | A c
 A -> b 

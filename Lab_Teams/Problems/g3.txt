@@ -1,11 +1,11 @@
 S A B C D
 a + * ( )
 S
-S -> BA
-A -> +BA
-A -> &
-B -> DC
-C -> *DC
-C -> &
-D -> (S)
+S -> B A
+A -> + B A
+A -> epsilon
+B -> D C
+C -> * D C
+C -> epsilon
+D -> ( S )
 D -> a

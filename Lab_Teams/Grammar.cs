@@ -51,15 +51,18 @@ namespace Lab_Teams
 
                         string[] elems = tokens[1].Split("|");
                         HashSet<List<string>> finalProductionValue = new HashSet<List<string>>();
-                        //TODO: Do spaces split here
                         foreach(var elem in elems)
                         {
-                            List<string> elemsTrimmed = new List<string>();
-                            foreach (var chr in elem.Trim())
+                            List<string> symbolsTrimmed = new List<string>();
+                            string[] symbols = elem.Split(" ");
+                            foreach (var symbol in symbols)
                             {
-                                elemsTrimmed.Add(chr.ToString());
+                                if (symbol.Trim().Length > 0)
+                                {
+                                    symbolsTrimmed.Add(symbol.Trim().ToString());
+                                }  
                             }
-                            finalProductionValue.Add(elemsTrimmed);
+                            finalProductionValue.Add(symbolsTrimmed);
                         }
                         List<string> nonTerminalsList = new List<string>(); 
                         foreach(var elem in nonTerminalsArray)
