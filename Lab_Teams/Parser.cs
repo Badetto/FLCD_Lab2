@@ -149,7 +149,7 @@ namespace Lab_Teams
                         }
                     }
 
-                    if (epsilonFound)
+                    if (epsilonFound || prod.Contains("epsilon"))
                     {
                         var followSet = Follow(nonTerminal);
                         foreach (var followSymbol in followSet)
@@ -160,7 +160,6 @@ namespace Lab_Teams
                 }
             }
         }
-
 
         public void PrintParsingTable()
         {
