@@ -159,6 +159,15 @@ namespace Lab_Teams
                     }
                 }
             }
+
+            //Conflicts
+            foreach (var entry in parsingTable)
+            {
+                if (entry.Value.Count > 1)
+                {
+                    Console.WriteLine($"Conflict at {entry.Key}: {string.Join(", ", entry.Value)}");
+                }
+            }
         }
 
         public void PrintParsingTable()
