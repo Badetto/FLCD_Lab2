@@ -126,6 +126,7 @@ namespace Lab_Teams
                 var nonTerminal = production.Key[0];
                 foreach (var prod in production.Value)
                 {
+                    string prodAsString = String.Join(" ", prod);
                     bool epsilonFound = false;
                     foreach (var symbol in prod)
                     {
@@ -134,7 +135,10 @@ namespace Lab_Teams
                         {
                             foreach (var firstSymbol in firstSet)
                             {
-                                parsingTable[(nonTerminal, firstSymbol)].AddRange(prod);
+                                if (!parsingTable[(nonTerminal, firstSymbol)].Contains(prodAsString))
+                                {
+                                    parsingTable[(nonTerminal, firstSymbol)].Add(prodAsString);
+                                }
                             }
                             epsilonFound = false;
                             break;
@@ -143,7 +147,10 @@ namespace Lab_Teams
                         {
                             foreach (var firstSymbol in firstSet.Where(x => x != "epsilon"))
                             {
-                                parsingTable[(nonTerminal, firstSymbol)].AddRange(prod);
+                                if (!parsingTable[(nonTerminal, firstSymbol)].Contains(prodAsString))
+                                {
+                                    parsingTable[(nonTerminal, firstSymbol)].Add(prodAsString);
+                                }
                             }
                             epsilonFound = true;
                         }
@@ -154,7 +161,10 @@ namespace Lab_Teams
                         var followSet = Follow(nonTerminal);
                         foreach (var followSymbol in followSet)
                         {
-                            parsingTable[(nonTerminal, followSymbol)].AddRange(prod);
+                            if (!parsingTable[(nonTerminal, followSymbol)].Contains(prodAsString))
+                            {
+                                parsingTable[(nonTerminal, followSymbol)].Add(prodAsString);
+                            }
                         }
                     }
                 }
