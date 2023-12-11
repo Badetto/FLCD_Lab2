@@ -7,10 +7,12 @@ namespace Lab_Teams
     public class Parser
     {
         private Grammar grammar;
+        private Dictionary<(string, string), List<string>> parsingTable;
 
         public Parser(Grammar grammar)
         {
             this.grammar = grammar;
+            this.parsingTable = new Dictionary<(string, string), List<string>>();
         }
 
         public HashSet<string> First(string symbol)
@@ -106,6 +108,71 @@ namespace Lab_Teams
             inProgress.Remove(nonTerminal);
 
             return followSet;
+        }
+
+        public void InitializeParsingTable()
+        {
+            foreach (var nonTerminal in grammar.nonTerminals)
+            {
+                foreach (var terminal in grammar.terminals)
+                {
+                    parsingTable.Add((nonTerminal, terminal), new List<string>());
+                }
+                parsingTable.Add((nonTerminal, "$"), new List<string>());
+            }
+
+            foreach (var production in grammar.productions)
+            {
+                var nonTerminal = production.Key[0];
+                foreach (var prod in production.Value)
+                {
+                    bool epsilonFound = false;
+                    foreach (var symbol in prod)
+                    {
+                        var firstSet = First(symbol);
+                        if (!firstSet.Contains("epsilon"))
+                        {
+                            foreach (var firstSymbol in firstSet)
+                            {
+                                parsingTable[(nonTerminal, firstSymbol)].AddRange(prod);
+                            }
+                            epsilonFound = false;
+                            break;
+                        }
+                        else
+                        {
+                            foreach (var firstSymbol in firstSet.Where(x => x != "epsilon"))
+                            {
+                                parsingTable[(nonTerminal, firstSymbol)].AddRange(prod);
+                            }
+                            epsilonFound = true;
+                        }
+                    }
+
+                    if (epsilonFound)
+                    {
+                        var followSet = Follow(nonTerminal);
+                        foreach (var followSymbol in followSet)
+                        {
+                            parsingTable[(nonTerminal, followSymbol)].AddRange(prod);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        public void PrintParsingTable()
+        {
+            Console.WriteLine("LL(1) Parsing Table:");
+            Console.WriteLine(new String('-', 50));
+            foreach (var entry in parsingTable)
+            {
+                string key = $"({entry.Key.Item1}, {entry.Key.Item2})";
+                string value = string.Join(" ", entry.Value);
+                Console.WriteLine($"{key}: {value}");
+            }
+            Console.WriteLine(new String('-', 50)); 
         }
     }
 }
