@@ -13,6 +13,10 @@ namespace Lab_Teams
             string relativePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g3.txt");
             string filePath = Path.GetFullPath(relativePath);
             Console.WriteLine(filePath);
+            
+            string relativeOutPath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g3.out");
+            string filePathOut = Path.GetFullPath(relativeOutPath);
+
             if (File.Exists(filePath))
             {
                 try
@@ -48,10 +52,17 @@ namespace Lab_Teams
                     }
                     parser.InitializeParsingTable();
                     parser.PrintParsingTable();
+
+                    
+                    parser.WriteParsingTableToFile(filePathOut);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
+                    using (StreamWriter sw = new StreamWriter(filePathOut, true))
+                    {
+                       sw.WriteLine("\n" + e.Message + "\n");
+                    }
                 }           
             }
             else

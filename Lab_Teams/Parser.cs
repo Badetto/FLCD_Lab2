@@ -192,5 +192,21 @@ namespace Lab_Teams
             }
             Console.WriteLine(new String('-', 50)); 
         }
+
+        public void WriteParsingTableToFile(string filename)
+        {
+            using (StreamWriter sw = new StreamWriter(filename))
+            {
+                sw.WriteLine("LL(1) Parsing Table:");
+                sw.WriteLine(new String('-', 50));
+                foreach (var entry in parsingTable)
+                {
+                    string key = $"({entry.Key.Item1}, {entry.Key.Item2})";
+                    string value = string.Join(" ", entry.Value);
+                    sw.WriteLine($"{key}: {value}");
+                }
+                sw.WriteLine(new String('-', 50));
+            }
+        }
     }
 }
