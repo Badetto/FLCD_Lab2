@@ -1,4 +1,4 @@
-Arr_stmt Assign_stmt Start_identifier Condition Digit Expression Expression_list Identifier Identifier_list If_stmt  Int_constant Int_expression  Character Mathematical_operator Sign Non_zero_digit Positive_number Program Pure_identifier_list Relational_operator End_identifier  Return_stmt  Stmt  String_const String_expr String_content End_int_const Var_stmt  While_stmt 
+Arr_stmt Assign_stmt Start_identifier Condition Digit Expression Expression_list Identifier Identifier_list If_stmt Int_constant Int_expression Character Mathematical_operator Sign Non_zero_digit Positive_number Program Pure_identifier_list Relational_operator End_identifier Return_stmt Stmt String_const String_expr String_content End_int_const Var_stmt While_stmt
 " ( ) * + , - / ; < <= = == > >= _ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9 arr digit else epsilon get_element if print readInt readString return set_element var while { }
 Program
 Program -> Stmt  ; Program

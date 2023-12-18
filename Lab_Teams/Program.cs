@@ -10,11 +10,11 @@ namespace Lab_Teams
         {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            string relativePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g3.txt");
+            string relativePath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g2.txt");
             string filePath = Path.GetFullPath(relativePath);
             Console.WriteLine(filePath);
             
-            string relativeOutPath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g3.out");
+            string relativeOutPath = Path.Combine(baseDirectory, "..", "..", "..", "Problems", "g2.out");
             string filePathOut = Path.GetFullPath(relativeOutPath);
 
             if (File.Exists(filePath))
@@ -29,27 +29,14 @@ namespace Lab_Teams
                     grammar.GetProductionsForNonTerminal("A");
                     grammar.PrintStartingSymbol();
                     grammar.PrintProductions();
-                    Console.WriteLine(grammar.IsCFG());
-                    foreach (var nT in grammar.nonTerminals)
-                    {
-                        Console.Write("FRIST(" + nT + ") = ");
-                        var firstSet = parser.First(nT);
-                        foreach (var set in firstSet)
-                        {
-                            Console.Write(set.ToString() + " ");
-                        }
-                        Console.WriteLine();
-                    }
-                    foreach (var nT in grammar.nonTerminals)
-                    {
-                        Console.Write("FOLLOW(" + nT + ") = ");
-                        var followSet = parser.Follow(nT);
-                        foreach (var set in followSet)
-                        {
-                            Console.Write(set.ToString() + " ");
-                        }
-                        Console.WriteLine();
-                    }
+                    /*int stackSize = 1024 * 1024 * 100;
+                    Thread parserThread = new Thread(new ThreadStart(parser.RunFirstAndFollowMethods), stackSize);
+                    parserThread.Start();
+                    parserThread.Join();*/
+                    int stackSize = 1024 * 1024 * 100; 
+                    Thread parserThread = new Thread(new ThreadStart(parser.RunInitializeParsingTable), stackSize);
+                    parserThread.Start();
+                    parserThread.Join();
                     parser.InitializeParsingTable();
                     parser.PrintParsingTable();
 

@@ -114,6 +114,7 @@ namespace Lab_Teams
         {
             foreach (var nonTerminal in grammar.nonTerminals)
             {
+                Console.WriteLine(nonTerminal);
                 foreach (var terminal in grammar.terminals)
                 {
                     parsingTable.Add((nonTerminal, terminal), new List<string>());
@@ -207,6 +208,36 @@ namespace Lab_Teams
                 }
                 sw.WriteLine(new String('-', 50));
             }
+        }
+
+        public void RunFirstAndFollowMethods()
+        {
+            foreach (var nT in grammar.nonTerminals)
+            {
+                Console.Write("FIRST(" + nT + ") = ");
+                var firstSet = First(nT);
+                foreach (var set in firstSet)
+                {
+                    Console.Write(set.ToString() + " ");
+                }
+                Console.WriteLine();
+            }
+
+            foreach (var nT in grammar.nonTerminals)
+            {
+                Console.Write("FOLLOW(" + nT + ") = ");
+                var followSet = Follow(nT);
+                foreach (var set in followSet)
+                {
+                    Console.Write(set.ToString() + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        public void RunInitializeParsingTable()
+        {
+            InitializeParsingTable();
         }
     }
 }
